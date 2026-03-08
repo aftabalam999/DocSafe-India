@@ -53,6 +53,11 @@ app.use('/api/activity', activityRoutes);
 // Health check
 app.get('/api/health', (req, res) => res.json({ status: 'OK', timestamp: new Date() }));
 
+// Root route
+app.get('/', (req, res) => {
+    res.send('Welcome to the DocSafe India API Backend! Server is running successfully.');
+});
+
 // Global error handler
 app.use((err, req, res, next) => {
     console.error(err.stack);
