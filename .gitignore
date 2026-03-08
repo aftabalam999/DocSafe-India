@@ -1,0 +1,24 @@
+# DocSafe India - .gitignore
+
+# Dependencies
+node_modules/
+frontend/node_modules/
+
+# Environment files (NEVER commit these)
+.env
+backend/.env
+frontend/.env
+*.env.local
+
+# Build output
+frontend/dist/
+frontend/build/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Misc
+.DS_Store
+Thumbs.db
+.vscode/
