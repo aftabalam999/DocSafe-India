@@ -99,6 +99,12 @@ export default function Login() {
                             'Sign In →'
                         )}
                     </button>
+
+                    <div style={{ textAlign: 'right', marginTop: '12px' }}>
+                        <Link to="/forgot-password" style={{ color: 'var(--primary-light)', fontSize: '14px', textDecoration: 'none', fontWeight: 500 }}>
+                            Forgot Password?
+                        </Link>
+                    </div>
                 </form>
 
                 <p className="auth-link">

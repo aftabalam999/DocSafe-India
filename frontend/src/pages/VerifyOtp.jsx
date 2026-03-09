@@ -130,6 +130,15 @@ export default function VerifyOtp() {
                             'Verify & Continue →'
                         )}
                     </button>
+
+                    <button
+                        type="button"
+                        className="btn-secondary"
+                        style={{ marginTop: '12px' }}
+                        onClick={() => navigate(-1)}
+                    >
+                        ← Back
+                    </button>
                 </form>
 
                 <p style={{ textAlign: 'center', marginTop: '20px', fontSize: '14px', color: 'var(--text-secondary)' }}>

@@ -28,6 +28,8 @@ export const verifyOtp = (data) => API.post('/auth/verify-otp', data);
 export const login = (data) => API.post('/auth/login', data);
 export const resendOtp = (data) => API.post('/auth/resend-otp', data);
 export const getMe = () => API.get('/auth/me');
+export const forgotPassword = (data) => API.post('/auth/forgot-password', data);
+export const resetPassword = (data) => API.post('/auth/reset-password', data);
 
 // Documents
 export const uploadDocument = (data) => API.post('/documents/upload', data, { headers: { 'Content-Type': 'multipart/form-data' } });

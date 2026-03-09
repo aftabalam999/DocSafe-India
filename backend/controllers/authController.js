@@ -1,6 +1,6 @@
 const User = require('../models/User');
 const { generateToken } = require('../utils/generateToken');
-const { generateOTP, sendOTPEmail } = require('../utils/otpService');
+const { generateOTP, sendOTPEmail, sendForgotPasswordEmail } = require('../utils/otpService');
 const { logActivity } = require('../utils/activityLogger');
 
 // @desc    Register user
@@ -128,6 +128,58 @@ exports.getMe = async (req, res) => {
     try {
         const user = await User.findById(req.user._id).populate('familyMembers.userId', 'name email avatar');
         res.status(200).json({ success: true, user });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+
+// @desc    Forgot Password
+// @route   POST /api/auth/forgot-password
+exports.forgotPassword = async (req, res) => {
+    try {
+        const { email } = req.body;
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return res.status(404).json({ success: false, message: 'User not found.' });
+        }
+
+        const otp = generateOTP();
+        user.otp = { code: otp, expiresAt: new Date(Date.now() + 10 * 60 * 1000) };
+        await user.save({ validateBeforeSave: false });
+
+        await sendForgotPasswordEmail(email, otp, user.name);
+        await logActivity(user._id, 'security', `Password reset OTP sent`, { email });
+
+        res.status(200).json({ success: true, message: 'Password reset OTP sent to your email.' });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+
+// @desc    Reset Password
+// @route   POST /api/auth/reset-password
+exports.resetPassword = async (req, res) => {
+    try {
+        const { email, otp, newPassword } = req.body;
+        const user = await User.findOne({ email }).select('+password');
+
+        if (!user) return res.status(404).json({ success: false, message: 'User not found.' });
+
+        if (!user.otp?.code || user.otp.code !== otp) {
+            return res.status(400).json({ success: false, message: 'Invalid OTP.' });
+        }
+        if (new Date() > user.otp.expiresAt) {
+            return res.status(400).json({ success: false, message: 'OTP has expired. Please request a new one.' });
+        }
+
+        user.password = newPassword;
+        user.otp = undefined;
+        await user.save();
+
+        await logActivity(user._id, 'security', `Password reset successful`, { email });
+
+        res.status(200).json({ success: true, message: 'Password updated successfully. You can now login.' });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }
