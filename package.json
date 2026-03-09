@@ -7,8 +7,5 @@
         "dev:backend": "cd backend && npm run dev",
         "dev:frontend": "cd frontend && npm run dev",
         "main": "npm run dev:backend & npm run dev:frontend"
-    },
-    "devDependencies": {
-        "concurrently": "^8.2.2"
     }
 }

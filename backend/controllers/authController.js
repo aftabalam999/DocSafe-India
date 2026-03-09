@@ -68,7 +68,7 @@ exports.verifyOtp = async (req, res) => {
             success: true,
             message: 'Email verified successfully!',
             token,
-            user: { _id: user._id, name: user.name, email: user.email, role: user.role },
+            user: { _id: user._id, name: user.name, email: user.email },
         });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
@@ -95,7 +95,7 @@ exports.login = async (req, res) => {
         res.status(200).json({
             success: true,
             token,
-            user: { _id: user._id, name: user.name, email: user.email, role: user.role, avatar: user.avatar },
+            user: { _id: user._id, name: user.name, email: user.email, avatar: user.avatar },
         });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });

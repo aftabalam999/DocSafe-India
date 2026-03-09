@@ -37,11 +37,7 @@ const userSchema = new mongoose.Schema({
     code: String,
     expiresAt: Date,
   },
-  role: {
-    type: String,
-    enum: ['user', 'admin'],
-    default: 'user',
-  },
+
   familyMembers: [
     {
       userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
