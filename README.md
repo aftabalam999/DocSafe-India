@@ -176,7 +176,6 @@ VITE_API_URL=http://localhost:5000/api
 - ✅ CORS protection
 - ✅ Password hashing with bcrypt (12 rounds)
 - ✅ Users can only access their own documents
-
 ---
 
 ## 🌐 Deployment
@@ -195,4 +194,4 @@ VITE_API_URL=http://localhost:5000/api
 
 ## 👨‍💻 Author
 
-**Aftab Alam** — Unified Mentor Government Project
+**Aftab Alam** 
